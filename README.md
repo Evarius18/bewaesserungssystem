@@ -1,11 +1,18 @@
 # Bewässerungssystem
 
----
+### Links
+* https://docs.aws.amazon.com/de_de/iot/latest/developerguide/iot-moisture-raspi-setup.html
+* https://www.computerbase.de/forum/threads/raspberrypi-5-dht22-sensor-raumtemperatur-luftfeuchtigkeit-ubuntu.2191608/
+* https://www.raspi-config.de/raspberry-pi-sensoren/
+* https://www.elektronik-kompendium.de/sites/raspberry-pi/1907101.htm
+* https://docs.sunfounder.com/projects/umsk/de/latest/05_raspberry_pi/pi_lesson19_dht11.html
+* https://tutorials-raspberrypi.de/bodenfeuchtigkeit-mit-dem-raspberry-pi-messen/
 
+---
 # Roadmap
 
 ## 🌱 Automatisches Bewässerungssystem – Funktionsübersicht
-
+---
 ### ✅ **Sollte man einbauen (Grundanforderungen)**
 
 *(Pflichtfunktionen / Kernlogik)*
