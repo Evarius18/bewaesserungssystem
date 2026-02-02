@@ -1,4 +1,5 @@
 import time
+from time import strftime, localtime
 import random # Für Simulationszwecke
 # import board
 # import adafruit_dht
