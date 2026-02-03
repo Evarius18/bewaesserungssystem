@@ -2,6 +2,7 @@ import time
 from time import strftime, localtime
 import random # Für Simulationszwecke
 # import board
+# import RPi.GPIO as GPIO
 # import adafruit_dht
 
 
@@ -12,6 +13,7 @@ pumpeDevice = None  # Platzhalter für das Pumpen-Gerät
 # Schwellwerte für die Feuchtigkeitssteuerung
 FEUCHTIGKEITS_SCHWELLE_UNTEN = 30.0  # Prozent
 FEUCHTIGKEITS_SCHWELLE_OBEN = 70.0  # Prozent
+# ---- Pumpenschutz muss definitert werden, um Hardware-Schäden zu vermeiden ----
 
 # Andere Konfigurationsparameter
 pumpe_aktiv = False # Status der Pumpe zu Beginn
