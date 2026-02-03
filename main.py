@@ -32,7 +32,7 @@ def zeitstempel():
 # Simulierte Wasserstandsmessung - später echte Sensor Logik
 def wasserstand_messen():
     # Simulierter Wasserstand in % Später ersetzen durch echten Sensorwert
-    return random.uniform(0.0, 100.0)
+    return random.uniform(0.0, 30.0)
 
 
 # Hauptlogik der Anwendung - dauerhaftes Auslesen der Sensordaten und Steuern der Aktoren
@@ -40,23 +40,24 @@ while True:
     try:
         # Auslesen der Sensordaten
         # humidity = dhtDevice.humidity
-        print(f"[{zeitstempel()}] Lese Feuchtigkeitswert vom Sensor...")
+        print(f"[{zeitstempel()}] ℹ️ Lese Feuchtigkeitswert vom Sensor...")
         
         humidity = random.uniform(20.0, 80.0)
-        print(f"[{zeitstempel()}] Aktuelle Feuchtigkeit: {humidity:.1f}%")
+        print(f"[{zeitstempel()}] ℹ️ Aktuelle Feuchtigkeit: {humidity:.1f}%")
 
         wasserstand = wasserstand_messen()
-        print(f"[{zeitstempel()}] Wasserstand Tank: {wasserstand:.1f}%")
+        print(f"[{zeitstempel()}] ℹ️ Wasserstand Tank: {wasserstand:.1f}%")
 
         wasser_ok = wasserstand >= WASSERSTAND_MIN
 
         if not wasser_ok:
+            print(f"[{zeitstempel()}] ⚠️ Tank fast leer – Bewässerung gesperrt!")
+            
             if pumpe_aktiv:
                 pumpe_aktiv = False
                 pumpensperre = True
-                print(f"[{zeitstempel()}] ⚠️ WASSER LEER → PUMPE GESTOPPT!")
-            else:
-                print(f"[{zeitstempel()}] ⛔ Tank leer - Bewässerung gesperrt")
+                print(f"[{zeitstempel()}] ⚠️ Pumpe wurde gestoppt!")
+
 
         # Pumpensperre ggf. aufheben
         if pumpensperre and wasserstand > (WASSERSTAND_MIN + 10):
@@ -67,18 +68,18 @@ while True:
         # Steuerlogik
         if humidity < FEUCHTIGKEITS_SCHWELLE_UNTEN and not pumpe_aktiv and wasser_ok and not pumpensperre:
             pumpe_aktiv = True
-            print(f"[{zeitstempel()}] Feuchtigkeit zu niedrig → Bewässerung STARTEN 💧")
+            print(f"[{zeitstempel()}] ℹ️ Feuchtigkeit zu niedrig → Bewässerung STARTEN 💧")
             warten = 5.0  # Kürzere Wartezeit nach dem Starten der Pumpe (um Bewässerung feiner zu steuern)
 
         elif humidity > FEUCHTIGKEITS_SCHWELLE_OBEN and pumpe_aktiv:
             pumpe_aktiv = False
-            print(f"[{zeitstempel()}] Feuchtigkeit hoch genug → Bewässerung STOPPEN 🚫")
+            print(f"[{zeitstempel()}] ℹ️ Feuchtigkeit hoch genug → Bewässerung STOPPEN 🚫")
             warten = 10.0  # Längere Wartezeit nach dem Stoppen der Pumpe
 
         else:
             print(f"[{zeitstempel()}] ✅ Keine Änderung am Bewässerungszustand")
             
-        print(f"[{zeitstempel()}] Pumpe aktiv: {pumpe_aktiv}")
+        print(f"[{zeitstempel()}] ℹ️ Pumpe aktiv: {pumpe_aktiv}")
 
         
     except RuntimeError as error:
