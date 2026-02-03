@@ -8,6 +8,8 @@
 * https://docs.sunfounder.com/projects/umsk/de/latest/05_raspberry_pi/pi_lesson19_dht11.html
 * https://tutorials-raspberrypi.de/bodenfeuchtigkeit-mit-dem-raspberry-pi-messen/
 
+* https://youtu.be/fWze-dR5K-I?si=sHnieQwP-aOaqOvI
+
 ---
 # Roadmap
 

@@ -50,14 +50,14 @@ while True:
 
         
     except RuntimeError as error:
-        # Behandeln von Lesefehlern
+        # Erwarteter Laufzeit-/Lesefehler → Meldung ausgeben, kurz warten und erneut versuchen
         print(error.args[0])
         time.sleep(2.0)
         continue
     
     except Exception as error:
-        # Allgemeine Ausnahmebehandlung
+        # Unerwarteter Fehler → weiterwerfen, damit das Programm abbricht
         # dhtDevice.exit()
         raise error
 
-    time.sleep(warten) # Wartezeit zwischen den Messungen, um Fehler beim auslesen zu vermeiden. Zahl in Klammern = Wartezeit in Sekunden
+    time.sleep(warten) # Wartezeit zwischen den Messungen, um Fehler beim auslesen zu vermeiden. Wert in Klammern = Wartezeit in Sekunden -> hier via Variable steuerbar
