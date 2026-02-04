@@ -48,7 +48,7 @@ while True:
         wasserstand = wasserstand_messen()
         print(f"[{zeitstempel()}] ℹ️ Wasserstand Tank: {wasserstand:.1f}%")
 
-        wasser_ok = wasserstand >= WASSERSTAND_MIN
+        wasser_ok = wasserstand >= WASSERSTAND_MIN # Wasserstand ist okay, wenn es über oder gleich dem Mindestwert ist
 
         if not wasser_ok:
             print(f"[{zeitstempel()}] ⚠️ Tank fast leer – Bewässerung gesperrt!")
@@ -78,7 +78,8 @@ while True:
 
         else:
             print(f"[{zeitstempel()}] ✅ Keine Änderung am Bewässerungszustand")
-            
+        
+        
         print(f"[{zeitstempel()}] ℹ️ Pumpe aktiv: {pumpe_aktiv}")
 
         

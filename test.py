@@ -1,5 +1,6 @@
 import time
 from time import strftime, localtime
+# import RPi.GPIO as GPIO
 # import board
 # import adafruit_dht
 
