@@ -1,42 +1,51 @@
 import time
-from time import strftime, localtime
-# import RPi.GPIO as GPIO
-# import board
-# import adafruit_dht
+import board
+import adafruit_dht
+import RPi.GPIO as GPIO
 
-# Python Datei um Sensorik zu testen (Anschlüsse etc.)
+# ===== KONFIGURATION =====
+FEUCHTE_SCHWELLE = 40      # Prozent
+PUMPE_LAUFZEIT = 5         # Sekunden
+PUMPE_PIN = 17
+WARTEN = 10
 
-# Initializiere die angeschlossenen Sensoren und Aktoren, mit dem jeweiligen Board-Pins
-dhtDevice = None  # Platzhalter für das DHT-Gerät
-pumpeDevice = None  # Platzhalter für das Pumpen-Gerät
+# ===== GPIO Setup =====
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(PUMPE_PIN, GPIO.OUT)
 
-# Variablen
-warten = 10  # Wartezeit zwischen den Messungen in Sekunden
+# ===== Sensor =====
+dhtDevice = adafruit_dht.DHT22(board.D4)
 
-# Zeitstempelfunktion (Debugging)
 def zeitstempel():
     return time.strftime("%H:%M:%S")
 
+def pumpe_an():
+    GPIO.output(PUMPE_PIN, GPIO.HIGH)
+
+def pumpe_aus():
+    GPIO.output(PUMPE_PIN, GPIO.LOW)
 
 while True:
     try:
-        # Lese die Sensorwerte aus
-        feuchte = dhtDevice.feuchte
+        temperatur = dhtDevice.temperature
+        feuchte = dhtDevice.humidity
 
-        # Ausgabe der gelesenen Werte mit Zeitstempel
         print(f"{zeitstempel()} - Temperatur: {temperatur:.1f}°C  Feuchte: {feuchte:.1f}%")
 
-        # Überprüfe, ob die Feuchtigkeit unter dem Schwellenwert liegt
-        if feuchte < FEUCHTE_SCHWELLE:
+        if feuchte is not None and feuchte < FEUCHTE_SCHWELLE:
             print(f"{zeitstempel()} - Feuchtigkeit unter Schwelle! Starte Pumpe.")
-            pumpeDevice.an()  # Pumpe einschalten
-            time.sleep(PUMPE_LAUFZEIT)  # Pumpe für eine bestimmte Zeit laufen lassen
-            pumpeDevice.au()  # Pumpe ausschalten
+            pumpe_an()
+            time.sleep(PUMPE_LAUFZEIT)
+            pumpe_aus()
             print(f"{zeitstempel()} - Pumpe gestoppt.")
 
-        # Wartezeit bis zur nächsten Messung
-        time.sleep(warten)
+        time.sleep(WARTEN)
+
+    except RuntimeError as e:
+        print(f"{zeitstempel()} - Messfehler: {e}")
+        time.sleep(2)
 
     except Exception as e:
-        print(f"{zeitstempel()} - Fehler beim Lesen der Sensoren: {e}")
-        time.sleep(5)  # Wartezeit bei Fehlern
+        GPIO.cleanup()
+        dhtDevice.exit()
+        raise e
