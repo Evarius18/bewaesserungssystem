@@ -24,8 +24,8 @@
 
 *(Pflichtfunktionen / Kernlogik)*
 
-*  Auslesen eines Feuchtigkeitssensors (real oder simuliert)
-*  Definition von unteren und oberen Feuchtigkeitsschwellwerten
+*  Auslesen eines Feuchtigkeitssensors
+*  Definition von unteren und oberen Feuchtigkeitsschwellwerten 
 *  Automatische Aktivierung der Bewässerung bei zu niedriger Feuchtigkeit
 *  Automatisches Abschalten der Bewässerung bei ausreichender Feuchtigkeit
 *  Hysterese (zwei Schwellwerte, um ständiges Ein-/Ausschalten zu vermeiden)
